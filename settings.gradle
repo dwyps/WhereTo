@@ -1,0 +1,2 @@
+rootProject.name='WhereTo'
+include ':app'
