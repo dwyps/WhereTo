@@ -1,4 +1,4 @@
-package com.example.whereto.ui.login.loginscreen
+package com.example.whereto.ui.startup.loginscreen
 
 import androidx.lifecycle.ViewModel
 

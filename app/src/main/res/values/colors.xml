@@ -5,4 +5,7 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="logo">#61676b</color>
+    <color name="secondary">#EBD4A6</color>
+    <color name="PrimaryColor">#98BAB2</color>
 </resources>

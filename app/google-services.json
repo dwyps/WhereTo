@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "218282866034",
+    "firebase_url": "https://whereto-8c1fc.firebaseio.com",
+    "project_id": "whereto-8c1fc",
+    "storage_bucket": "whereto-8c1fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218282866034:android:7c230525796e17702259eb",
+        "android_client_info": {
+          "package_name": "com.example.whereto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "218282866034-424k2ljm380mncnnm313n4k0rtn217li.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIbkLrHeuqCgvIwYJgMLU-9CH_EnBUL_8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "218282866034-424k2ljm380mncnnm313n4k0rtn217li.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-package com.example.whereto.ui.login.splashscreen
+package com.example.whereto.ui.startup.splashscreen
 
 import androidx.lifecycle.ViewModel
 

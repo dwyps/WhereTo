@@ -27,12 +27,12 @@
             android:layout_width="match_parent"
             app:itemIconTint="@color/bottom_nav_selector"
             app:itemTextColor="@color/bottom_nav_selector"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:id="@+id/bottom_nav"
             app:menu="@menu/bottom_menu"
             android:layout_gravity="bottom"
             app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
-            android:background="@drawable/bc_bottom_nav"/>
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            android:background="#98BAB2"/>
 
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
