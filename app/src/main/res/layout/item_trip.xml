@@ -8,53 +8,71 @@
 
         <variable
             name="tripItem"
-            type="com.example.whereto.model.Trip" />
+            type="com.example.whereto.data.model.Trip" />
 
     </data>
 
-<androidx.cardview.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:backgroundTint="#F2F2F2"
-    app:cardCornerRadius="10dp"
-    android:layout_marginBottom="30dp">
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_trip_constraint_layout"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:layout_width="match_parent"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
         android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:orientation="vertical">
+        android:layout_marginBottom="30dp">
 
-        <ImageView
-            android:id="@+id/item_trip_iv_photo"
+        <androidx.cardview.widget.CardView
+            android:clickable="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/item_trip_card_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:bindThumbnail="@{tripItem}"
-            tools:src="@drawable/placeholder_item_image"
-            android:adjustViewBounds="true"/>
+            android:backgroundTint="#F2F2F2"
+            app:cardCornerRadius="10dp">
 
-        <TextView
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{tripItem.name}"
-            tools:text="Thailand"
-            android:textSize="20sp"/>
+            <LinearLayout
+                android:clickable="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:orientation="vertical">
 
-        <TextView
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{tripItem.description}"
-            tools:text="From Bangkok to Phi Phi Island"
-            android:textSize="16sp"
-            android:paddingBottom="10dp"/>
+                <ImageView
+                    android:clickable="false"
+                    android:id="@+id/item_trip_iv_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:bindThumbnailTrip="@{tripItem}"
+                    tools:src="@drawable/placeholder_item_image"
+                    android:adjustViewBounds="true"/>
+
+                <TextView
+                    android:clickable="false"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{tripItem.name}"
+                    tools:text="Thailand"
+                    android:textSize="20sp"/>
+
+                <TextView
+                    android:clickable="false"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{tripItem.description}"
+                    tools:text="From Bangkok to Phi Phi Island"
+                    android:textSize="16sp"
+                    android:paddingBottom="10dp"/>
 
 
-    </LinearLayout>
-
-</androidx.cardview.widget.CardView>
-
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

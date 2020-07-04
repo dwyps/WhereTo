@@ -1,14 +1,15 @@
-package com.example.whereto.ui.main.profile.adapter
+package com.example.whereto.ui.main.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.whereto.databinding.ItemTripBinding
-import com.example.whereto.model.Trip
+import com.example.whereto.databinding.ItemNewsBinding
+import com.example.whereto.data.model.News
 
-class ProfileRecyclerAdapter : ListAdapter<Trip, ProfileRecyclerAdapter.ViewHolder>(ProfileDiffCallback()) {
+
+class HomeNewsRecyclerAdapter : ListAdapter<News, HomeNewsRecyclerAdapter.ViewHolder>(HomeDiffCallback()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -16,17 +17,18 @@ class ProfileRecyclerAdapter : ListAdapter<Trip, ProfileRecyclerAdapter.ViewHold
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
         val item = getItem(position)
 
         holder.bind(item)
     }
 
     class ViewHolder private constructor(
-        private val binding: ItemTripBinding
+        private val binding: ItemNewsBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Trip) {
-            binding.tripItem = item
+        fun bind(item: News) {
+            binding.newsItem = item
             binding.executePendingBindings()
         }
 
@@ -35,7 +37,7 @@ class ProfileRecyclerAdapter : ListAdapter<Trip, ProfileRecyclerAdapter.ViewHold
 
                 val layoutInflater = LayoutInflater.from(parent.context)
 
-                val binding = ItemTripBinding.inflate(layoutInflater, parent, false)
+                val binding = ItemNewsBinding.inflate(layoutInflater, parent, false)
 
                 return ViewHolder(binding)
             }
@@ -43,15 +45,13 @@ class ProfileRecyclerAdapter : ListAdapter<Trip, ProfileRecyclerAdapter.ViewHold
     }
 
 
-    class ProfileDiffCallback : DiffUtil.ItemCallback<Trip>() {
-        override fun areItemsTheSame(oldItem: Trip, newItem: Trip): Boolean {
+    class HomeDiffCallback : DiffUtil.ItemCallback<News>() {
+        override fun areItemsTheSame(oldItem: News, newItem: News): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: Trip, newItem: Trip): Boolean {
+        override fun areContentsTheSame(oldItem: News, newItem: News): Boolean {
             return oldItem == newItem
         }
-
-
     }
 }

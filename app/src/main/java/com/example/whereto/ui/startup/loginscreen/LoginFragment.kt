@@ -50,7 +50,7 @@ class LoginFragment : Fragment(R.layout.login_fragment) {
                     Toast.makeText(context, "Authentication failed.",
                         Toast.LENGTH_SHORT).show()
 
-                    Timber.e(it.exception)
+                    Timber.e(it.exception?.message)
                 }
             }
 

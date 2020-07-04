@@ -11,19 +11,20 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.whereto.R
+import com.example.whereto.ui.main.MainActivity
 import com.example.whereto.ui.main.profile.adapter.ProfileTabAdapter
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import kotlinx.android.synthetic.main.profile_fragment.*
 
+private const val RESULT_LOAD_IMAGE: Int = 1
 
 class ProfileFragment : Fragment(R.layout.profile_fragment) {
 
     private lateinit var mAuth: FirebaseAuth
     private lateinit var viewPagerAdapter: ProfileTabAdapter
-
-    private val RESULT_LOAD_IMAGE: Int = 1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,9 +64,12 @@ class ProfileFragment : Fragment(R.layout.profile_fragment) {
 
         }.attach()
 
-        btn_settings.setOnClickListener {
-            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToSettingsFragment())
-        }
+        initListeners()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).ensureBottomNavigation()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -96,5 +100,12 @@ class ProfileFragment : Fragment(R.layout.profile_fragment) {
                     .placeholder(R.color.white)
                     .error(R.drawable.bc_profile_photo))
             .into(profile_iv_profile_photo)
+    }
+
+    private fun initListeners() {
+
+        btn_settings.setOnClickListener {
+            findNavController().navigate(ProfileFragmentDirections.actionProfileFragmentToSettingsFragment())
+        }
     }
 }

@@ -57,19 +57,16 @@ class RegisterFragment : Fragment(R.layout.register_fragment) {
 
                             Timber.e(it.exception)
                             Toast.makeText(context, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show()
+                                Toast.LENGTH_LONG).show()
                         }
                     }
 
             } else {
 
-                if (register_edit_text_password.text.toString().length < 8) {
-                    Toast.makeText(context, "Password must be at least 8 characters long!", Toast.LENGTH_SHORT).show()
-
-                } else {
+                if (register_edit_text_password.text.toString().length < 8)
+                    Toast.makeText(context, "Password must be at least 8 characters long!", Toast.LENGTH_LONG).show()
+                else
                     Toast.makeText(context, "Passwords don't match!", Toast.LENGTH_LONG).show()
-
-                }
             }
         }
 

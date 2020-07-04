@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+
+    <data>
+
+        <variable
+            name="dealItem"
+            type="com.example.whereto.data.model.Deal"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/item_deal_constrain_layout"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingEnd="15dp"
+        android:padding="10dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            app:cardCornerRadius="10dp"
+            app:cardBackgroundColor="#F2F2F2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:clickable="false"
+                android:layout_width="wrap_content"
+                android:clipChildren="false"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:clickable="false"
+                    android:id="@+id/deal_iv_icon"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:scaleType="fitXY"
+                    android:padding="10dp"
+                    app:bindThumbnailDeal="@{dealItem}"
+                    android:layout_gravity="start|center_vertical"
+                    tools:src="@drawable/ic_flash_deal"/>
+
+                <TextView
+                    android:clickable="false"
+                    android:id="@+id/deal_tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Flash Deal"
+                    android:fontFamily="@font/montserrat"
+                    android:text="@{dealItem.name}"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="10dp"
+                    android:layout_gravity="center_vertical"/>
+
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

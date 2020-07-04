@@ -1,9 +1,8 @@
-package com.example.whereto.model
+package com.example.whereto.data.model
 
 import android.graphics.drawable.Drawable
 
-data class Trip (
+data class Deal (
     var name: String,
-    var description: String,
     var thumbnail: Drawable
 )
