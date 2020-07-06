@@ -1,6 +1,7 @@
 package com.example.whereto.ui.main.home
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.navigation.fragment.findNavController
@@ -20,6 +21,8 @@ class HomeFragment : Fragment(R.layout.home_fragment), HomeRecyclerAdapter.OnIte
     private lateinit var viewPagerAdapter: HomeTabAdapter
     private lateinit var recyclerViewAdapter: HomeRecyclerAdapter
     private lateinit var newsRecyclerAdapter: HomeNewsRecyclerAdapter
+
+    private var nameList = mutableListOf<String>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,38 +62,47 @@ class HomeFragment : Fragment(R.layout.home_fragment), HomeRecyclerAdapter.OnIte
         (activity as MainActivity).ensureBottomNavigation()
     }
 
-    //TODO CHANGE TO REPOSITORY
+    
     private fun initRecyclerView() {
 
         val dealsList = arrayListOf<Deal>()
 
+        nameList =
+            mutableListOf(
+                "Flash Deals",
+                "Top Deals",
+                "Romantic Deals",
+                "Adventure Deals",
+                "Wish List"
+            )
+
         dealsList.add(
             Deal(
-                "Flash Deals",
+                nameList[0],
                 resources.getDrawable(R.drawable.ic_flash_deal)
             )
         )
         dealsList.add(
             Deal(
-                "Top Deals",
+                nameList[1],
                 resources.getDrawable(R.drawable.ic_top_deal)
             )
         )
         dealsList.add(
             Deal(
-                "Romantic Deals",
+                nameList[2],
                 resources.getDrawable(R.drawable.ic_romantic_deal)
             )
         )
         dealsList.add(
             Deal(
-                "Adventure Deals",
+                nameList[3],
                 resources.getDrawable(R.drawable.ic_adventure_deal)
             )
         )
         dealsList.add(
             Deal(
-                "Wish List",
+                nameList[4],
                 resources.getDrawable(R.drawable.ic_wish_list)
             )
         )
@@ -155,7 +167,21 @@ class HomeFragment : Fragment(R.layout.home_fragment), HomeRecyclerAdapter.OnIte
 
     override fun onItemClick(position: Int, deal: Deal) {
 
-        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTripsFragment())
+        when(deal.name) {
+
+            nameList[0] -> findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTripsFragment(position+1))
+
+            nameList[1] -> findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTripsFragment(position+1))
+
+            nameList[2] -> findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTripsFragment(position+1))
+
+            nameList[3] -> findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTripsFragment(position+1))
+
+            nameList[4] -> findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToProfileFragment(1))
+
+        }
+
+
     }
 
 }

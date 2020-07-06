@@ -7,8 +7,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.whereto.R
 import com.example.whereto.data.model.Trip
+import com.example.whereto.ui.main.home.HomeFragment
+import com.example.whereto.ui.main.home.HomeFragmentDirections
 import com.example.whereto.ui.main.home.HomeViewModel
 import com.example.whereto.ui.main.home.adapter.HomeTripsRecyclerAdapter
 import com.example.whereto.util.InjectorUtils
@@ -22,25 +25,41 @@ class HomeRecommendedFragment : Fragment(R.layout.home_tab_recycler_view_fragmen
         InjectorUtils.provideViewModelFactory()
     }
 
+    private val handler = Handler()
+    private lateinit var runnable: Runnable
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
 
-        homeViewModel.getRecommendedTrips()
         homeViewModel.trips.observe(viewLifecycleOwner, Observer {
 
             homeRecyclerAdapter.submitList(it)
             homeRecyclerAdapter.notifyDataSetChanged()
 
         })
-
     }
 
     override fun onResume() {
         super.onResume()
 
-        homeRecyclerAdapter.notifyDataSetChanged()
+        runnable = Runnable {
+
+            homeViewModel.getRecommendedTrips()
+            homeRecyclerAdapter.notifyDataSetChanged()
+
+            if (homeRecyclerAdapter.currentList.isEmpty())
+                handler.postDelayed(runnable, 1000)
+        }
+
+        handler.postDelayed(runnable, 1000)
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        handler.removeCallbacks(runnable)
     }
 
     private fun initRecyclerView() {
@@ -54,6 +73,7 @@ class HomeRecommendedFragment : Fragment(R.layout.home_tab_recycler_view_fragmen
     }
 
     override fun onItemClick(position: Int, trip: Trip) {
-        Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show()
+
+        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTripFragment(trip.name))
     }
 }

@@ -3,12 +3,15 @@ package com.example.whereto.data.model
 import java.util.*
 
 data class Trip(
-    var date: Date,
-    var description: String,
-    var name: String,
-    var price: Long,
-    var thumbnail: String,
-    var timesSold: Long,
+    val date: Date,
+    val description: String,
+    val name: String,
+    val price: Long,
+    val thumbnail: String,
+    val timesSold: Long,
     var travelled: Boolean,
-    var wishList: Boolean
+    var wishList: Boolean,
+    val flashDeal: Boolean,
+    val romanticDeal: Boolean,
+    val adventureDeal: Boolean
 )

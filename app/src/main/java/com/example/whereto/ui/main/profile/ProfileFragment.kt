@@ -8,6 +8,7 @@ import android.provider.MediaStore
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.whereto.R
@@ -26,45 +27,14 @@ class ProfileFragment : Fragment(R.layout.profile_fragment) {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var viewPagerAdapter: ProfileTabAdapter
 
+    private val args: ProfileFragmentArgs by navArgs()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mAuth = FirebaseAuth.getInstance()
-
-        profile_tv_username.text = mAuth.currentUser?.displayName
-
-        setProfilePicture(mAuth.currentUser?.photoUrl)
-
-        profile_iv_profile_photo.setOnClickListener {
-
-            val i = Intent(
-                Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            )
-            startActivityForResult(i, RESULT_LOAD_IMAGE)
-        }
-
-        viewPagerAdapter = ProfileTabAdapter(this)
-
-        profile_view_pager.adapter = viewPagerAdapter
-        profile_view_pager.isUserInputEnabled = false
-        profile_view_pager.requestDisallowInterceptTouchEvent(true)
-
-        TabLayoutMediator(profile_tab_layout, profile_view_pager) { tab, position ->
-
-            when(position) {
-
-                0 -> {
-                    tab.icon = resources.getDrawable(R.drawable.ic_visited)
-                }
-
-                1 -> {
-                    tab.icon = resources.getDrawable(R.drawable.ic_saved)
-                }
-            }
-
-        }.attach()
-
+        setUserData()
         initListeners()
+        initViewPager()
     }
 
     override fun onResume() {
@@ -87,6 +57,52 @@ class ProfileFragment : Fragment(R.layout.profile_fragment) {
 
             mAuth.currentUser?.updateProfile(updateInfo)
         }
+    }
+
+    private fun initViewPager() {
+
+        viewPagerAdapter = ProfileTabAdapter(this)
+
+        profile_view_pager.adapter = viewPagerAdapter
+        profile_view_pager.isUserInputEnabled = false
+        profile_view_pager.requestDisallowInterceptTouchEvent(true)
+
+        TabLayoutMediator(profile_tab_layout, profile_view_pager) { tab, position ->
+
+            when(position) {
+
+                0 -> {
+                    tab.icon = resources.getDrawable(R.drawable.ic_visited)
+                }
+
+                1 -> {
+                    tab.icon = resources.getDrawable(R.drawable.ic_saved)
+                }
+            }
+
+        }.attach()
+
+        if (args.wishList == 1)
+            profile_tab_layout.selectTab(profile_tab_layout.getTabAt(1))
+
+    }
+
+    private fun setUserData() {
+
+        mAuth = FirebaseAuth.getInstance()
+
+        profile_tv_username.text = mAuth.currentUser?.displayName
+
+        setProfilePicture(mAuth.currentUser?.photoUrl)
+
+        profile_iv_profile_photo.setOnClickListener {
+
+            val i = Intent(
+                Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            )
+            startActivityForResult(i, RESULT_LOAD_IMAGE)
+        }
+
     }
 
     private fun setProfilePicture(imageUri: Uri?) {

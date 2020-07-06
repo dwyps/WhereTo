@@ -6,10 +6,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.whereto.R
 import com.example.whereto.data.model.Trip
+import com.example.whereto.ui.main.home.HomeFragmentDirections
 import com.example.whereto.ui.main.home.HomeViewModel
 import com.example.whereto.ui.main.home.adapter.HomeTripsRecyclerAdapter
+import com.example.whereto.ui.main.profile.ProfileFragmentDirections
 import com.example.whereto.util.InjectorUtils
 import kotlinx.android.synthetic.main.home_tab_recycler_view_fragment.*
 
@@ -52,6 +55,7 @@ class HomeCheapestFragment : Fragment(R.layout.home_tab_recycler_view_fragment),
     }
 
     override fun onItemClick(position: Int, trip: Trip) {
-        Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show()
+
+        findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToTripFragment(trip.name))
     }
 }

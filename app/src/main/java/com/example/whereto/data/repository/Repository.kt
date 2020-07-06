@@ -112,12 +112,12 @@ class Repository {
 
         val travelledList = mutableListOf<Trip>()
 
-        Log.e("VM", "Recommended")
 
         allTrips.sortByDescending { it.timesSold }
 
         allTrips.forEach {
 
+            Timber.e("one trip")
             if (travelledList.size < homeListSize) {
                 if (it.price.toInt() > 700) {
 
@@ -152,6 +152,48 @@ class Repository {
 
         allTrips.forEach {
             if (travelledList.size < homeListSize)
+                travelledList.add(it)
+        }
+
+        return travelledList
+    }
+
+    fun getFlashDealTrips(): MutableList<Trip> {
+
+        val travelledList = mutableListOf<Trip>()
+
+        getLowestPriceTrips()
+
+        allTrips.forEach {
+            if (it.flashDeal)
+                travelledList.add(it)
+        }
+
+        return travelledList
+    }
+
+    fun getRomanticDealTrips(): MutableList<Trip> {
+
+        val travelledList = mutableListOf<Trip>()
+
+        getLowestPriceTrips()
+
+        allTrips.forEach {
+            if (it.romanticDeal)
+                travelledList.add(it)
+        }
+
+        return travelledList
+    }
+
+    fun getAdventureDealTrips(): MutableList<Trip> {
+
+        val travelledList = mutableListOf<Trip>()
+
+        getLowestPriceTrips()
+
+        allTrips.forEach {
+            if (it.adventureDeal)
                 travelledList.add(it)
         }
 
@@ -197,7 +239,10 @@ class Repository {
                                 trip.child("thumbnail").value.toString(),
                                 trip.child("times_sold").value as Long,
                                 trip.child("travelled").value as Boolean,
-                                trip.child("wish_list").value as Boolean
+                                trip.child("wish_list").value as Boolean,
+                                trip.child("flash_deal").value as Boolean,
+                                trip.child("romantic_deal").value as Boolean,
+                                trip.child("adventure_deal").value as Boolean
                             )
                         )
                     }

@@ -12,8 +12,33 @@
         tools:layout="@layout/home_fragment" >
         <action
             android:id="@+id/action_homeFragment_to_tripsFragment"
-            app:destination="@id/tripsFragment" />
+            app:destination="@id/tripsFragment">
+
+            <argument
+                android:name="deal"
+                app:argType="integer"
+                android:defaultValue="0" />
+        </action>
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment">
+
+            <argument
+                android:name="wish_list"
+                app:argType="integer"
+                android:defaultValue="0" />
+        </action>
+        <action
+            android:id="@+id/action_homeFragment_to_tripFragment"
+            app:destination="@id/tripFragment">
+
+            <argument
+                android:name="trip"
+                app:argType="string"
+                android:defaultValue="0"/>
+        </action>
     </fragment>
+
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.whereto.ui.main.profile.ProfileFragment"
@@ -22,7 +47,22 @@
         <action
             android:id="@+id/action_profileFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+
+        <argument
+            android:name="wish_list"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_profileFragment_to_tripFragment"
+            app:destination="@id/tripFragment">
+
+            <argument
+                android:name="trip"
+                app:argType="string"
+                android:defaultValue="0"/>
+        </action>
     </fragment>
+
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.whereto.ui.main.settings.SettingsFragment"
@@ -34,9 +74,38 @@
             app:popUpTo="@id/profileFragment"
             app:popUpToInclusive="true"/>
     </fragment>
+
     <fragment
         android:id="@+id/tripsFragment"
         android:name="com.example.whereto.ui.main.trips.TripsFragment"
         android:label="trips_fragment"
-        tools:layout="@layout/trips_fragment" />
+        tools:layout="@layout/trips_fragment">
+
+        <argument
+            android:name="deal"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_tripsFragment_to_tripFragment"
+            app:destination="@id/tripFragment">
+
+            <argument
+                android:name="trip"
+                app:argType="string"
+                android:defaultValue="0"/>
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/tripFragment"
+        android:name="com.example.whereto.ui.main.trip.TripFragment"
+        android:label="fragment_trip"
+        tools:layout="@layout/fragment_trip" >
+
+        <argument
+            android:name="trip"
+            app:argType="string"
+            android:defaultValue="0"/>
+    </fragment>
+
 </navigation>

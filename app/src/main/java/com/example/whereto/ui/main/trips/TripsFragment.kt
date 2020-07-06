@@ -2,16 +2,21 @@ package com.example.whereto.ui.main.trips
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.whereto.R
 import com.example.whereto.data.model.Trip
 import com.example.whereto.ui.main.MainActivity
+import com.example.whereto.ui.main.home.HomeFragmentDirections
 import com.example.whereto.ui.main.profile.adapter.RecyclerAdapter
 import com.example.whereto.util.InjectorUtils
 import kotlinx.android.synthetic.main.trips_fragment.*
@@ -20,20 +25,26 @@ class TripsFragment : Fragment(R.layout.trips_fragment), RecyclerAdapter.OnItemL
 
     private lateinit var tripsRecyclerAdapter: RecyclerAdapter
 
+    private lateinit var spinnerAdapter: ArrayAdapter<String>
+
+    private val args: TripsFragmentArgs by navArgs()
+
     private val tripsViewModel: TripsViewModel by viewModels {
         InjectorUtils.provideViewModelFactory()
     }
+
+    private val handler = Handler()
+    private lateinit var runnable: Runnable
 
     //TODO FONT IN SPINNER, FILTERS
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         initListeners()
         initSortSpinner()
         initRecyclerView()
-
-
-        tripsViewModel.getAllTrips()
+        checkDeals()
 
         tripsViewModel.trips.observe(viewLifecycleOwner, Observer {
 
@@ -45,7 +56,52 @@ class TripsFragment : Fragment(R.layout.trips_fragment), RecyclerAdapter.OnItemL
 
     override fun onResume() {
         super.onResume()
+
         (activity as MainActivity).ensureBottomNavigation()
+
+        runnable = Runnable {
+
+            tripsRecyclerAdapter.notifyDataSetChanged()
+
+            if (tripsRecyclerAdapter.currentList.isEmpty())
+                handler.postDelayed(runnable, 1000)
+        }
+
+        handler.postDelayed(runnable, 1000)
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        handler.removeCallbacks(runnable)
+    }
+
+
+
+    private fun checkDeals() {
+
+        when(args.deal) {
+
+            0 -> {
+                tripsViewModel.getAllTrips()
+            }
+
+            1 -> {
+                tripsViewModel.getFlashDealTrips()
+            }
+
+            2 -> {
+                trips_sort_by_spinner.setSelection(1)
+            }
+
+            3 -> {
+                tripsViewModel.getRomanticDealTrips()
+            }
+
+            4 -> {
+                tripsViewModel.getAdventureDealTrips()
+            }
+        }
     }
 
     private fun initListeners() {
@@ -63,8 +119,8 @@ class TripsFragment : Fragment(R.layout.trips_fragment), RecyclerAdapter.OnItemL
 
     private fun initSortSpinner() {
 
-        val filters = arrayOf("Best Selling", "Newest", "Lowest Price", "Highest Price")
-        val spinnerAdapter = ArrayAdapter (requireContext(), android.R.layout.simple_spinner_item, filters)
+        val filters = arrayOf("All","Best Selling", "Newest", "Lowest Price", "Highest Price")
+        spinnerAdapter = ArrayAdapter (requireContext(), android.R.layout.simple_spinner_item, filters)
 
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         trips_sort_by_spinner.adapter = spinnerAdapter
@@ -83,22 +139,26 @@ class TripsFragment : Fragment(R.layout.trips_fragment), RecyclerAdapter.OnItemL
                 id: Long
             ) {
                 when(position) {
-                    0 -> {
+
+                    0 -> { }
+
+                    1 -> {
 
                         tripsViewModel.getBestSellingTrips()
                     }
 
-                    1 -> {
+                    2 -> {
 
                         tripsViewModel.getNewestTrips()
                     }
 
-                    2 -> {
+                    3 -> {
 
                         tripsViewModel.getLowestPriceTrips()
                     }
 
-                    3 -> {
+                    4 -> {
+
                         tripsViewModel.getHighestPriceTrips()
                     }
                  }
@@ -120,7 +180,7 @@ class TripsFragment : Fragment(R.layout.trips_fragment), RecyclerAdapter.OnItemL
 
     override fun onItemClick(position: Int, trip: Trip) {
 
-        Toast.makeText(context, "Was clicked!", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(TripsFragmentDirections.actionTripsFragmentToTripFragment(trip.name))
     }
 
     override fun onItemLongClick(position: Int, trip: Trip) {

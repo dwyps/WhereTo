@@ -47,6 +47,18 @@ class TripsViewModel (
         mTrips.value = repository.getBestSellingTrips()
     }
 
+    fun getFlashDealTrips() {
+        mTrips.value = repository.getFlashDealTrips()
+    }
+
+    fun getRomanticDealTrips() {
+        mTrips.value = repository.getRomanticDealTrips()
+    }
+
+    fun getAdventureDealTrips() {
+        mTrips.value = repository.getAdventureDealTrips()
+    }
+
     fun setWishList(trip: String, state: Boolean) {
         repository.setWishList(trip, state)
     }
